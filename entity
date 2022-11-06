@@ -1,1 +1,81 @@
+package entiry;
+
+import java.sql.Date;
+
+/**
+ * 类说明
+ * 		Person实体类
+ * @author qianliangguo
+ */
+public class Person {
+	private Integer id;
+	private String name;
+	private String mobile;
+	private String telephone;
+	private String email;
+	private String city;
+	private Date birthday;
+	public Person() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	public Person(Integer id, String name, String mobile, String telephone,
+			String email, String city, Date birthday) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.mobile = mobile;
+		this.telephone = telephone;
+		this.email = email;
+		this.city = city;
+		this.birthday = birthday;
+	}
+	public Integer getId() {
+		return id;
+	}
+	public void setId(Integer id) {
+		this.id = id;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getMobile() {
+		return mobile;
+	}
+	public void setMobile(String mobile) {
+		this.mobile = mobile;
+	}
+	public String getTelephone() {
+		return telephone;
+	}
+	public void setTelephone(String telephone) {
+		this.telephone = telephone;
+	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	public String getCity() {
+		return city;
+	}
+	public void setCity(String city) {
+		this.city = city;
+	}
+	public Date getBirthday() {
+		return birthday;
+	}
+	public void setBirthday(Date birthday) {
+		this.birthday = birthday;
+	}
+	@Override
+	public String toString() {
+		return "Person [id=" + id + ", name=" + name + ", mobile="
+				+ mobile + ", telephone=" + telephone + ",email"+email+",city" + city + ",birthday" + birthday + "]";
+	}
+}
 
