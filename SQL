@@ -1,0 +1,13 @@
+create table person(
+	id int(7) primary key auto_increment,
+	name varchar(20) not null,
+	mobile varchar(13) check( mobile like '___%-_______%'),
+	telephone varchar(11) not null unique check( length(telphone)=11 ),
+	email varchar(30) unique check( email like '_%@%_' ),
+	city varchar(20),
+	birthday date
+);
+Insert into person values(null,'wxd', '111-11111111', '13051800687','wxd@zzu.com','zz','2020-01-10');
+Insert into person values(null,'周冬雨', '123-12580000', '18572136217','zdy@zzu.com','sh','2020-01-11');
+Insert into person values(null,'周董', '124-12372300', '15572136217','zd@zzu.com','bj','2010-02-21');
+
