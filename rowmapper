@@ -1,0 +1,45 @@
+package rowmapper;
+
+import java.sql.ResultSet;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import entiry.Person;
+
+/**
+ * 类说明:
+ * 		封装结果集接口
+ * 
+ * 
+ */
+public interface RowMapper<T> {
+	
+	public T mapperRow(ResultSet rs);
+	
+}
+
+/**
+ * 类说明:
+ * 		将ResultSet封装成一个对象
+ * 
+ */
+public class PersonRowMapper implements RowMapper {
+
+	@Override
+	public Object mapperRow(ResultSet rs) {
+		Person person = new Person();
+		try {
+			person.setId(rs.getInt(1));
+			person.setName(rs.getString(2));
+			person.setMobile(rs.getString(3));
+			person.setTelephone(rs.getString(4));
+			person.setEmail(rs.getString(5));
+			person.setCity(rs.getString(6));
+			person.setBirthday(rs.getDate(7));
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return person;
+	}
+}
