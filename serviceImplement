@@ -1,0 +1,143 @@
+package service;
+
+import java.sql.Connection;
+import java.util.List;
+
+import util.JdbcUtil3;
+
+import dao.PersonDao;
+import dao.PersonDaoImp;
+import entity.Person;
+
+/**
+ * 类说明:
+ * 		Service类
+ * @author qianliangguo
+ */
+public class PersonServiceImp implements PersonService {
+	PersonDao persondao = new PersonDaoImp();
+	Connection conn = null;
+	
+	@Override
+	public void queryAllPerson() {
+		try {
+			conn = JdbcUtil3.getConnection();
+			List<Person> person = persondao.queryAllPerson();
+			for (Person p : person) {
+				System.out.println(p);
+			}
+		} catch (Exception e) {
+			System.out.println("数据库出现异常");
+		}finally{
+			try {
+				JdbcUtil3.release(null, null, conn);
+			} catch (Exception e) {
+				throw new RuntimeException("释放资源发生异常");
+			}
+		}
+	}
+
+	@Override
+	public Person QueryPersonByName(String name) {
+		
+		Person person = persondao.queryPersonByName(name);
+		
+		/*异常情况:
+		 *		该姓名不存在
+		 */
+		if(person == null){
+			throw new RuntimeException("该姓名不存在");
+		}
+		/*正常情况:
+		 *		加载驱动,获取连接...
+		 */
+		try {
+			conn = JdbcUtil3.getConnection();	
+		} catch (Exception e) {
+			throw new RuntimeException("数据库异常");
+		}finally{
+			try {
+				JdbcUtil3.release(null, null, conn);
+			} catch (Exception e) {
+				throw new RuntimeException("释放资源异常");
+			}
+		}
+		return person;
+	}
+
+	@Override
+	public Person QueryPersonByMobile(String mobile) {
+		Person person = persondao.queryPersonByMobile(mobile);
+		
+		/*异常情况:
+		 *		该电话号不存在
+		 */
+		if(person == null){
+			throw new RuntimeException("该电话号码不存在");
+		}
+
+		/*正常情况:
+		 *		加载驱动,获取连接...
+		 */
+		try {
+			conn = JdbcUtil3.getConnection();	
+		} catch (Exception e) {
+			throw new RuntimeException("数据库异常");
+		}finally{
+			try {
+				JdbcUtil3.release(null, null, conn);
+			} catch (Exception e) {
+				throw new RuntimeException("释放资源异常");
+			}
+		}
+		return person;
+	}
+
+	@Override
+	public void insertPerson(Person person) {
+		try {
+			conn = JdbcUtil3.getConnection();
+			persondao.insertPerson(person);
+		} catch (Exception e) {
+			throw new RuntimeException("数据库异常");
+		}finally{
+			try {
+				JdbcUtil3.release(null, null, conn);
+			} catch (Exception e) {
+				throw new RuntimeException("释放资源异常");
+			}
+		}
+	}
+
+	@Override
+	public void deletePerson(String name) {
+		try {
+			conn= JdbcUtil3.getConnection();
+			persondao.deletePerson(name);
+		} catch (Exception e) {
+			throw new RuntimeException("数据库异常");
+		}finally{
+			try {
+				JdbcUtil3.release(null, null, conn);
+			} catch (Exception e) {
+				throw new RuntimeException("释放资源异常");
+			}
+		}
+	}
+
+	@Override
+	public void updatePerson(Person person) {
+		try {
+			conn = JdbcUtil3.getConnection();
+			persondao.updatePerson(person);
+		} catch (Exception e) {
+			throw new RuntimeException("数据库异常");
+		}finally{
+			try {
+				JdbcUtil3.release(null, null, conn);
+			} catch (Exception e) {
+				throw new RuntimeException("释放资源异常");
+			}
+		}
+	}
+}
