@@ -1,0 +1,182 @@
+package view;
+
+/**
+ * 类说明:
+ * 		视图层
+ * @author qianliangguo
+ */
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+import java.util.Scanner;
+
+import service.PersonService;
+import service.PersonServiceImp;
+
+import entity.Person;
+
+public class TellBookView {
+	private static Scanner in = new Scanner(System.in);
+	private static PersonService ps = new PersonServiceImp();
+
+	public static void main(String[] args) throws Exception {
+		showMain();
+	}
+
+	public static void showMain() throws Exception {
+		System.out.println("***************欢迎访问通讯录**************");
+		System.out.println("1.显示所有联系人      2.按姓名查找联系人      3.按号码查找联系人");
+		System.out.println("4.添加联系人              5.删除联系人                  6.修改联系人信息    ");
+		System.out.println("7.退出");
+		while (true) {
+			System.out.println("请给出你的选择：");
+			int n = in.nextInt();
+			switch (n) {
+			case 1:
+				showPerson();
+				break;
+			case 2:
+				showPersonByName();
+				;
+				break;
+			case 3:
+				showPersonByMobile();
+				break;
+			case 4:
+				insertPerson();
+				break;
+			case 5:
+				deletePerson();
+				break;
+			case 6:
+				updatePerson();
+				break;
+			case 7:
+				System.out.println("您已经退出系统");
+				System.exit(0);
+				break;
+			default:
+				throw new RuntimeException("您输入有误");
+			}
+		}
+	}
+
+	/**
+	 * 方法说明: 
+	 * 		void showPerson():显示所有联系人
+	 * 
+	 */
+	public static void showPerson() {
+		ps.queryAllPerson();
+	}
+
+	/**
+	 * 方法说明: 
+	 * 		showPersonByName():根据姓名查找联系人
+	 */
+	public static void showPersonByName() throws Exception {
+		String name = null;
+		System.out.println("请输入姓名:");
+		name = in.next();
+		Person p = ps.QueryPersonByName(name);
+		System.out.println(p);
+	}
+
+	/**
+	 * 方法说明: 
+	 * 		showPersonByMobile():根据号码查找联系人
+	 */
+	public static void showPersonByMobile() {
+		String mobile = null;
+		System.out.println("请输入电话:");
+		mobile = in.next();
+		Person p = ps.QueryPersonByMobile(mobile);
+		System.out.println(p);
+	}
+
+	/**
+	 * 方法说明: 
+	 * 		insertPerson():插入联系人
+	 */
+	public static void insertPerson() {
+
+		try {
+			System.out.println("请输入添加联系人的姓名:");
+			String name = in.next();
+			System.out.println("请输入添加联系人的mobile:");
+			String mobile = in.next();
+			System.out.println("请输入添加联系人的telphone:");
+			String telphone = in.next();
+			System.out.println("请输入添加联系人的email:");
+			String emil = in.next();
+			System.out.println("请输入添加联系人的city:");
+			String city = in.next();
+			System.out.println("请输入添加联系人的birthday:");
+			String next = in.next();
+			// 设置指定的日期格式
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			// 将String转化为指定格式的java.uti.Date
+			java.util.Date utildate = sdf.parse(next);
+			// 将util.date转化为long
+			long time = utildate.getTime();
+			// 创建java.sql.date(long time)以便于存入数据库
+			java.sql.Date birthday = new java.sql.Date(time);
+			Person person = new Person(null, name, telphone, mobile, emil,city, birthday);
+			ps.insertPerson(person);
+			System.out.println("插入完成");
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * 方法说明: 
+	 * 		deletePerson():删除联系人
+	 */
+	public static void deletePerson() {
+		String name = null;
+		System.out.println("请输入要删除联系人的姓名:");
+		name = in.next();
+		ps.deletePerson(name);
+		System.out.println("删除成功");
+	}
+	
+	/**
+	 * 方法说明: 
+	 * 		updatePerson():修改联系人信息
+	 */
+	public static void updatePerson() {
+		try {
+			System.out.println("请输入需要修改信息的联系人姓名:");
+			String name = in.next();
+			System.out.println("请输入修改后联系人的mobile:");
+			String mobile = in.next();
+			System.out.println("请输入修改后联系人的telphone:");
+			String telphone = in.next();
+			System.out.println("请输入修改后联系人的email:");
+			String emil = in.next();
+			System.out.println("请输入修改后联系人的city:");
+			String city = in.next();
+			System.out.println("请输入修改后联系人的birthday:");
+			String next = in.next();
+			// 设置指定的日期格式
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			// 将String转化为指定格式的java.uti.Date
+			java.util.Date utildate = sdf.parse(next);
+			// 将util.date转化为long
+			long time = utildate.getTime();
+			// 创建java.sql.date(long time)以便于存入数据库
+			java.sql.Date birthday = new java.sql.Date(time);
+			Person person = new Person(null, name, telphone, mobile, emil,city, birthday);
+			ps.updatePerson(person);
+			System.out.println("修改完成");
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+}
